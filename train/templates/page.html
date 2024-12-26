@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <style>
+        body{
+        background-color: #080710;
+        }
+        table,th,tr,td{
+            color: white;
+            
+        }
+      .app-container {
+        height: 100vh;
+        width: 100%;
+      }
+      .complete {
+        text-decoration: line-through;
+      }
+      h3{
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="app-container d-flex align-items-center justify-content-center flex-column"
+      ng-app="myApp"
+      ng-controller="myController"
+    >
+      <form method="post">
+        {% csrf_token %}
+      <h3>Todo List</h3>
+
+      <div class="d-flex align-items-center mb-3 mt-3">
+        <div class="form-group mr-3 mb-0">
+          <input type="text"class="form-control" name="name" required placeholder="Enter a task here">
+        </div>
+        <button
+           class="btn btn-primary mr-3">Add Task</button>
+    </form>
+    <a href="/logout_page/" class="btn btn-danger" type="submit">Logout</a>
+      </div>
+      <div class="table-wrapper">
+        <table class="table mb-4 mt-5">
+          <thead>
+            <tr style="font: bold;">
+              <th>No.</th>
+              <th>Todo item</th>
+              <th>status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in todo %}
+            <tr>
+             
+              <td>{{forloop.counter}}</td>
+              <td>{{i.name}}</td>
+              <td>
+                {% if i.status == True %}
+                Completed
+                {% else %}
+                In Progress
+                {%endif%}
+              </td>
+              
+                <td><a href="/delete_page/{{i.id}}" class=" btn btn-danger p-1">Delete</a>
+                 
+                
+                    <a href="/update_page/{{i.id}}" class=" btn btn-success p-1">Finished</a>
+              </td>
+              
+            </tr>
+            {%endfor%}
+          </tbody>
+        </table>
+      </div>
+   
+    </div>
+      
+    </body>
+    </html>
